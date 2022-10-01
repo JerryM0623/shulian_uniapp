@@ -11,10 +11,15 @@
    ```shell
    git@github.com:xxxzl-JerryM/shulian_uniapp.git
    ```
+
 2. 使用 `HbuilderX` 打开项目文件夹
+
 3. 右键新建 `uni_modules` 文件夹
+
 4. 打开 [uView2.0重磅发布，利剑出鞘，一统江湖 - DCloud 插件市场](https://ext.dcloud.net.cn/plugin?id=1593) 
    安装 `uView` 插件至 `uni_modules` 文件夹
+
 5. 配置 `uView` 插件(根据下方链接进行配置)
-   [下载安装方式配置 | uView - 多平台快速开发的UI框架 - uni-app UI框架 (gitee.io)](https://xuqu.gitee.io/components/downloadSetting.html)
+   [下载安装方式配置 | uView 2.0 - 全面兼容nvue的uni-app生态框架 - uni-app UI框架 (uviewui.com)](https://www.uviewui.com/components/downloadSetting.html)
+
 6. 上方菜单运行至 **浏览器/手机/小程序**
