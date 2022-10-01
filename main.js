@@ -1,4 +1,6 @@
 import App from './App'
+import uView from '@/uni_modules/uview-ui'
+Vue.use(uView)
 
 // #ifndef VUE3
 import Vue from 'vue'
