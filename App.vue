@@ -18,6 +18,5 @@
 	.container{
 		padding: 42rpx 34rpx 0 34rpx;
 		width: 682rpx;
-		height: calc(100vh - 42rpx);
 	}
 </style>
