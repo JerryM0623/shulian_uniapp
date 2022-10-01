@@ -15,7 +15,7 @@
 <script>
 	import { verifyUsername } from '../../utils/verifyUsername.js';
 	import { showSuccessNotify, showWarningNotify, showErrorNotify } from '../../utils/showNotify.js';
-	import { devHost } from '../../config/config.js';
+	import { getBaseUrl } from '../../utils/getBaseUrl.js';
 	export default {
 		data() {
 			return {
@@ -38,7 +38,7 @@
 					if (verifyUsername(username)){
 						// 请求服务器
 						uni.request({
-							url: `${devHost}/login`,
+							url: `${ getBaseUrl() }/login`,
 							method: "POST",
 							data:{
 								username: this.userInfo.username,
