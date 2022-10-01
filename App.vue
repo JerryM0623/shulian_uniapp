@@ -15,4 +15,9 @@
 <style lang="scss">
 	/* 注意要写在第一行，同时给style标签加入lang="scss"属性 */
 	@import "@/uni_modules/uview-ui/index.scss";
+	.container{
+		padding: 42rpx 34rpx 0 34rpx;
+		width: 682rpx;
+		height: calc(100vh - 42rpx);
+	}
 </style>
