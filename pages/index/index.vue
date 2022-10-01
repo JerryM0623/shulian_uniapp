@@ -1,7 +1,7 @@
 <template>
 	<view class="container index-container">
 		<u-notify ref="uNotify"></u-notify>
-		<view class="search">
+		<view class="search" @click="gotoSearch">
 			<u-search :showAction="false" bgColor="#f5f5f5" shape="round" :placeholder="placeholder" inputAlign="center"
 				:disabled="true" searchIconColor="#656565" color="#000000"></u-search>
 		</view>
@@ -51,6 +51,7 @@
 <script>
 	import { getBaseUrl } from '../../utils/getBaseUrl.js';
 	import { showSuccessNotify, showErrorNotify } from '../../utils/showNotify.js';
+	import { getHotKeyWords } from '../../request/getHotKeyWords.js';
 	export default {
 		data() {
 			return {
@@ -104,24 +105,21 @@
 					}
 				})
 			},
-			getHotKeyWords(){
-				uni.request({
-					url:`${ getBaseUrl() }/search/hot`,
-					method:"GET",
-					success: (res) => {
-						if (res.statusCode === 200 && res.data.code ===200){
-							this.hotKeyWordsList = res.data.data;
-							this.placeholder = this.hotKeyWordsList[Math.floor(Math.random() * this.hotKeyWordsList.length)].articlename;
-							this.timer = setInterval(() => {
-								this.placeholder = this.hotKeyWordsList[Math.floor(Math.random() * this.hotKeyWordsList.length)].articlename;
-							},5000);
-						}else{
-							showErrorNotify(this.notifyObj, "信息获取失败");
-						}
-					},
-					fail: (err) => {
-						showErrorNotify(this.notifyObj, "信息获取失败");
-					}
+			async getHotKeyWords_index(){
+				const res = await getHotKeyWords();
+				if (res[1]){
+					this.hotKeyWordsList = res[1].data.data;
+					this.placeholder = this.hotKeyWordsList[Math.floor(Math.random() * this.hotKeyWordsList.length)].articlename;
+					this.timer = setInterval(() => {
+						this.placeholder = this.hotKeyWordsList[Math.floor(Math.random() * this.hotKeyWordsList.length)].articlename;
+					}, 5000)
+				}else{
+					showErrorNotify(this.notifyObj, "信息获取失败")
+				}
+			},
+			gotoSearch(){
+				uni.navigateTo({
+					url:`/pages/search/search?placeholder=${this.placeholder}`
 				})
 			}
 		},
@@ -130,7 +128,7 @@
 			this.notifyObj = this.$refs.uNotify;
 			this.getSwiperList();
 			this.getRecommendList();
-			this.getHotKeyWords();
+			this.getHotKeyWords_index();
 		},
 		beforeDestroy(){
 			this.timer = undefined;
@@ -219,7 +217,7 @@
 				color: #999999;
 				font-size: 13.89rpx;
 				text-align: center;
-				padding-bottom: 130rpx;
+				padding-bottom: 10rpx;
 			}
 		}
 	}
