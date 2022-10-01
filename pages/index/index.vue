@@ -1,11 +1,12 @@
 <template>
 	<view class="container index-container">
+		<u-notify ref="uNotify"></u-notify>
 		<view class="search">
-			<u-search :showAction="false" bgColor="#f5f5f5" shape="round" placeholder="" inputAlign="center"
+			<u-search :showAction="false" bgColor="#f5f5f5" shape="round" :placeholder="placeholder" inputAlign="center"
 				:disabled="true" searchIconColor="#656565" color="#000000"></u-search>
 		</view>
 		<view class="swiper">
-			<u-swiper :list="list1" indicator indicatorMode="line" circular autoplay heig ht="90" radius="10"></u-swiper>
+			<u-swiper :list="swiperList" indicator indicatorMode="line" circular autoplay height="90" radius="10"></u-swiper>
 		</view>
 		<view class="buttons">
 			<view class="item category">
@@ -28,49 +29,111 @@
 		<view class="recommend">
 			<view class="title">潜力好书</view>
 			<view class="list">
-				<view class="list-item" v-for="item in list2" :key="item.id">
-					<image class="book-image" :src="item.imgUrl" mode="aspectFill"></image>
+				<view class="list-item" v-for="item in recommendList" :key="item.id">
+					<image class="book-image" :src="'https://www.facerome.com' + item.url_image" mode="aspectFill"></image>
 					<view class="book-info">
 						<view class="name-rate">
-							<text class="name">{{ item.name }}</text>
-							<text class="rate">{{ item.rate }}分</text>
+							<text class="name">{{ item.articlename }}</text>
+							<text class="rate">{{ item.rateavg }}分</text>
 						</view>
 						<view class="summary">
-							<u-text :lines="2" :text="item.summary"></u-text>
+							<u-text :lines="2" :text="item.intro"></u-text>
 						</view>
 						<view class="author">{{ item.author }}</view>
 					</view>
 				</view>
 			</view>
+			<view class="tip">暂时没有更多哦...</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import { getBaseUrl } from '../../utils/getBaseUrl.js';
+	import { showSuccessNotify, showErrorNotify } from '../../utils/showNotify.js';
 	export default {
 		data() {
 			return {
 				title: 'Hello',
-				list1: [
-					'../../static/test_images/111.bmp',
-					'../../static/test_images/222.jpg',
-					'../../static/test_images/333.png',
-					'../../static/test_images/444.bmp',
-					'../../static/test_images/555.jpg',
-					'../../static/test_images/666.jpg',
-				],
-				list2:[
-					{ id:1, imgUrl: '../../static/test_images/111.bmp', name: "春江花月夜", summary: "你拍一，我拍一，我们一起做游戏,你拍一，我拍一，我们一起做游戏,你拍一，我拍一，我们一起做游戏", author: "111222333", rate: "8.5" },
-					{ id:1, imgUrl: '../../static/test_images/222.jpg', name: "城春草木深", summary: "你拍二，我拍二，我们大家都不二,你拍二，我拍二，我们大家都不二,你拍二，我拍二，我们大家都不二", author: "aaabbbddd", rate: "9.3" },
-					{ id:1, imgUrl: '../../static/test_images/111.bmp', name: "感时花溅泪", summary: "你拍三，我拍三，三三喵口跑第三,你拍三，我拍三，三三喵口跑第三,你拍三，我拍三，三三喵口跑第三", author: "熊熊熊子路", rate: "7.6" },
-					{ id:1, imgUrl: '../../static/test_images/222.jpg', name: "床前明月光", summary: "你拍四，我拍四，大家一起去考试,你拍四，我拍四，大家一起去考试,你拍四，我拍四，大家一起去考试", author: "落日国人", rate: "7.7" },
-					{ id:1, imgUrl: '../../static/test_images/111.bmp', name: "锄禾日当午", summary: "你拍五，我拍五，一起去当王老五,你拍五，我拍五，一起去当王老五,你拍五，我拍五，一起去当王老五", author: "罗马假日", rate: "8.0" },
-					{ id:1, imgUrl: '../../static/test_images/222.jpg', name: "从你的世界刷过", summary: "你拍六，我拍六，这辈子不会很溜,你拍六，我拍六，这辈子不会很溜,你拍六，我拍六，这辈子不会很溜", author: "流浪地球", rate: "2.6" },
-				]
+				swiperList: [],
+				recommendList:[],
+				hotKeyWordsList: [],
+				session: "",
+				token: "",
+				notifyObj: "",
+				timer: null,
+				placeholder: ""
 			}
 		},
-		onLoad() {
-
+		methods:{
+			getSessionAndToken(){
+				this.session = uni.getStorageSync('session');
+				this.token = uni.getStorageSync('token');
+			},
+			getSwiperList(){
+				uni.request({
+					url:`${ getBaseUrl() }/main/swiper`,
+					method:"GET",
+					success: (res) => {
+						if (res.statusCode === 200 && res.data.code ===200){
+							this.swiperList = res.data.data.content.articlerows.map(row => {
+								return "https://www.facerome.com" + row.url_limage;
+							});
+						}else{
+							showErrorNotify(this.notifyObj, "获取轮播图失败");
+						}
+					},
+					fail: (err) => {
+						showErrorNotify(this.notifyObj, "获取轮播图失败");
+					}
+				})
+			},
+			getRecommendList(){
+				uni.request({
+					url:`${ getBaseUrl() }/main/recommend`,
+					method:"GET",
+					success: (res) => {
+						if (res.statusCode === 200 && res.data.code ===200){
+							this.recommendList = res.data.data.content.articlerows;
+						}else{
+							showErrorNotify(this.notifyObj, "信息获取失败");
+						}
+					},
+					fail: (err) => {
+						showErrorNotify(this.notifyObj, "信息获取失败");
+					}
+				})
+			},
+			getHotKeyWords(){
+				uni.request({
+					url:`${ getBaseUrl() }/search/hot`,
+					method:"GET",
+					success: (res) => {
+						if (res.statusCode === 200 && res.data.code ===200){
+							this.hotKeyWordsList = res.data.data;
+							this.placeholder = this.hotKeyWordsList[Math.floor(Math.random() * this.hotKeyWordsList.length)].articlename;
+							this.timer = setInterval(() => {
+								this.placeholder = this.hotKeyWordsList[Math.floor(Math.random() * this.hotKeyWordsList.length)].articlename;
+							},5000);
+						}else{
+							showErrorNotify(this.notifyObj, "信息获取失败");
+						}
+					},
+					fail: (err) => {
+						showErrorNotify(this.notifyObj, "信息获取失败");
+					}
+				})
+			}
+		},
+		onReady() {
+			this.getSessionAndToken();
+			this.notifyObj = this.$refs.uNotify;
+			this.getSwiperList();
+			this.getRecommendList();
+			this.getHotKeyWords();
+		},
+		beforeDestroy(){
+			this.timer = undefined;
 		}
 	}
 </script>
@@ -82,7 +145,6 @@
 		}
 		.buttons{
 			display: flex;
-			margin-bottom: 41.67rpx;
 			.item{
 				display: flex;
 				flex-direction: column;
@@ -109,7 +171,7 @@
 			.list{
 				.list-item{
 					height: 206.94rpx;
-					margin-bottom: 37.5rpx;
+					padding-bottom: 37.5rpx;
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
@@ -152,6 +214,12 @@
 						}
 					}
 				}
+			}
+			.tip{
+				color: #999999;
+				font-size: 13.89rpx;
+				text-align: center;
+				padding-bottom: 37.5rpx;
 			}
 		}
 	}
