@@ -219,7 +219,7 @@
 				color: #999999;
 				font-size: 13.89rpx;
 				text-align: center;
-				padding-bottom: 37.5rpx;
+				padding-bottom: 130rpx;
 			}
 		}
 	}

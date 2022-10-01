@@ -15,6 +15,33 @@
 		    }
 		    
 		}
+        ,{
+            "path" : "pages/bookCity/bookCity",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/bookCase/bookCase",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/profile/profile",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -22,5 +49,36 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
-	"uniIdRouter": {}
+	"uniIdRouter": {},
+	"tabBar": {
+		"backgroundColor": "white",
+		"borderStyle": "black",
+		"selectedColor": "#242a33",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"text": "首页",
+				"iconPath": "static/tabbar/home.png",
+				"selectedIconPath": "static/tabbar/home_s.png"
+			},
+			{
+				"pagePath": "pages/bookCity/bookCity",
+				"text": "书城",
+				"iconPath": "static/tabbar/bookcity.png",
+				"selectedIconPath": "static/tabbar/bookcity_s.png"
+			},
+			{
+				"pagePath": "pages/bookCase/bookCase",
+				"text": "书架",
+				"iconPath": "static/tabbar/bookcase.png",
+				"selectedIconPath": "static/tabbar/bookcase_s.png"
+			},
+			{
+				"pagePath": "pages/profile/profile",
+				"text": "我的",
+				"iconPath": "static/tabbar/profile.png",
+				"selectedIconPath": "static/tabbar/profile_s.png"
+			}
+		]
+	}
 }
