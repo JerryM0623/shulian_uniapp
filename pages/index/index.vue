@@ -9,7 +9,7 @@
 			<u-swiper :list="swiperList" indicator indicatorMode="line" circular autoplay height="90" radius="10"></u-swiper>
 		</view>
 		<view class="buttons">
-			<view class="item category">
+			<view class="item category" @click="gotoBookCity">
 				<image src="../../static/icons/category.png"></image>
 				<text>分类查询</text>
 			</view>
@@ -110,6 +110,11 @@
 			gotoOtherPage(url){
 				uni.navigateTo({
 					url
+				})
+			},
+			gotoBookCity(){
+				uni.switchTab({
+					url:"/pages/bookCity/bookCity"
 				})
 			}
 		},
