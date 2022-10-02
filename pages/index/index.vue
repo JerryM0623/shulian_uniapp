@@ -28,21 +28,7 @@
 		</view>
 		<view class="recommend">
 			<view class="title">潜力好书</view>
-			<view class="list">
-				<view class="list-item" v-for="item in recommendList" :key="item.id">
-					<image class="book-image" :src="'https://www.facerome.com' + item.url_image" mode="aspectFill"></image>
-					<view class="book-info">
-						<view class="name-rate">
-							<text class="name">{{ item.articlename }}</text>
-							<text class="rate">{{ item.rateavg }}分</text>
-						</view>
-						<view class="summary">
-							<u-text :lines="2" :text="item.intro"></u-text>
-						</view>
-						<view class="author">{{ item.author }}</view>
-					</view>
-				</view>
-			</view>
+			<list-item :dataList="recommendList"></list-item>
 			<view class="tip">暂时没有更多哦...</view>
 		</view>
 	</view>
@@ -52,6 +38,7 @@
 	import { getBaseUrl } from '../../utils/getBaseUrl.js';
 	import { showSuccessNotify, showErrorNotify } from '../../utils/showNotify.js';
 	import { getHotKeyWords } from '../../request/getHotKeyWords.js';
+	import ListItem from '../../component/ListItem.vue';
 	export default {
 		data() {
 			return {
@@ -65,6 +52,9 @@
 				timer: null,
 				placeholder: ""
 			}
+		},
+		components: {
+			ListItem
 		},
 		methods:{
 			getSessionAndToken(){
@@ -165,53 +155,6 @@
 				font-size: 34.72rpx;
 				font-weight: 700;
 				margin-bottom: 41.67rpx;
-			}
-			.list{
-				.list-item{
-					height: 206.94rpx;
-					padding-bottom: 37.5rpx;
-					display: flex;
-					flex-direction: row;
-					justify-content: space-between;
-					.book-image{
-						width: 150rpx;
-						height: 206.94rpx;
-						margin-right: 23.61rpx;
-						border-radius: 6.94rpx;
-					}
-					.book-info{
-						width: calc(682rpx - 173.61rpx);
-						display: flex;
-						flex-direction: column;
-						.name-rate{
-							height: 34.72rpx;
-							margin-top: 15.28rpx;
-							display: flex;
-							justify-content: space-between;
-							.name{
-								font-size: 31.94rpx;
-								color: #000000;
-								font-weight: 700;
-							}
-							.rate{
-								// width: 76.39rpx;
-								font-size: 27.78rpx;
-								color: #ff3b2d;
-								font-weight: 700;
-							}
-						}
-						.summary{
-							margin-top: 25.69rpx;
-							font-size: 26.39rpx;
-							color: #676767;
-						}
-						.author{
-							margin-top: 16.67rpx;
-							color: #999999;
-							font-size: 26.39rpx;
-						}
-					}
-				}
 			}
 			.tip{
 				color: #999999;
