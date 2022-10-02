@@ -1,7 +1,7 @@
 <template>
 	<view class="container index-container">
 		<u-notify ref="uNotify"></u-notify>
-		<view class="search" @click="gotoSearch">
+		<view class="search" @click="gotoOtherPage(`/pages/search/search?placeholder=${placeholder}`)">
 			<u-search :showAction="false" bgColor="#f5f5f5" shape="round" :placeholder="placeholder" inputAlign="center"
 				:disabled="true" searchIconColor="#656565" color="#000000"></u-search>
 		</view>
@@ -13,15 +13,15 @@
 				<image src="../../static/icons/category.png"></image>
 				<text>分类查询</text>
 			</view>
-			<view class="item hot">
+			<view class="item hot" @click="gotoOtherPage('/pages/templatePage/templatePage?title=热门排行')">
 				<image src="../../static/icons/hot.png"></image>
 				<text>热门排行</text>
 			</view>
-			<view class="item finish">
+			<view class="item finish" @click="gotoOtherPage('/pages/templatePage/templatePage?title=完结小说')">
 				<image src="../../static/icons/finish.png"></image>
 				<text>完结小说</text>
 			</view>
-			<view class="item new">
+			<view class="item new" @click="gotoOtherPage('/pages/templatePage/templatePage?title=最近更新')">
 				<image src="../../static/icons/new.png"></image>
 				<text>最近更新</text>
 			</view>
@@ -107,9 +107,9 @@
 					showErrorNotify(this.notifyObj, "信息获取失败")
 				}
 			},
-			gotoSearch(){
+			gotoOtherPage(url){
 				uni.navigateTo({
-					url:`/pages/search/search?placeholder=${this.placeholder}`
+					url
 				})
 			}
 		},
