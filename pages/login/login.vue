@@ -50,7 +50,7 @@
 									// 保存数据
 									uni.setStorageSync("session", res.data.data["jieqi_sessionid"]);
 									uni.setStorageSync("token", res.data.data["jieqi_token"]);
-									uni.setStorageSync("userinfo", JSON.stringify({
+									uni.setStorageSync("userInfo", JSON.stringify({
 										userid: res.data.data["jieqi_userid"],
 										username: res.data.data["jieqi_username"],
 										useruname: res.data.data["jieqi_useruname"]
