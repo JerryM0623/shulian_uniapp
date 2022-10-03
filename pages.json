@@ -74,6 +74,16 @@
             }
             
         }
+        ,{
+            "path" : "pages/bookDeatil/bookDeatil",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
