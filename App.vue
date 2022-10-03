@@ -21,7 +21,7 @@
 	.container{
 		padding: 42rpx 34rpx 0 34rpx;
 		width: 682rpx;
-		height: 100%;
+		height: calc(100% - 42rpx);
 		font-family: -apple-system, 'Helvetica Neue', Helvetica, 'Nimbus Sans L', Arial, 'Liberation Sans', 'PingFang SC', 'Hiragino Sans GB',
 		  'Source Han Sans CN', 'Source Han Sans SC', 'Microsoft YaHei', 'Wenquanyi Micro Hei', 'WenQuanYi Zen Hei', 'ST Heiti', SimHei,
 		  'WenQuanYi Zen Hei Sharp', sans-serif;
