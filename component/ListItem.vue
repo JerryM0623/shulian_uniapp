@@ -1,6 +1,6 @@
 <template>
 	<view class="list">
-		<view class="list-item" v-for="item in dataList" :key="item.id">
+		<view class="list-item" v-for="item in dataList" :key="item.articleid" @click="gotoDetail(item.articleid)">
 			<image class="book-image" :src="'https://www.facerome.com' + item.url_image" mode="aspectFill"></image>
 			<view class="book-info">
 				<view class="name-rate">
@@ -23,7 +23,13 @@
 		data(){
 			return {}
 		},
-		methods:{}
+		methods:{
+			gotoDetail(bookId){
+				uni.navigateTo({
+					url:"/pages/bookDeatil/bookDeatil?bookid=" + bookId
+				})
+			}
+		}
 	}
 </script>
 
